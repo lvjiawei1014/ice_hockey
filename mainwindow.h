@@ -2,25 +2,26 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-//#include "guimanager.h"
 #include "motionmanager.h"
 #include<QtWidgets>
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
-    //MotionManager mMotionManager;
-    //QPainter painter;
+private:
+    QPushButton* startButton;
+    MotionManager* mMotionManager;
 
 public:
 
-
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    //GuiManager mGuiManager;
 
     void updateGameDrawing();
-    void drawBody(MotionManager::BodyState bodyState);
+    void drawBody(PsyEntity* psyEntity);
+
+public slots:
+    void step();
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

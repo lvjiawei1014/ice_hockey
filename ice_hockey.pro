@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    guimanager.cpp \
     Box2D/Collision/Shapes/b2ChainShape.cpp \
     Box2D/Collision/Shapes/b2CircleShape.cpp \
     Box2D/Collision/Shapes/b2EdgeShape.cpp \
@@ -72,10 +71,10 @@ SOURCES += main.cpp\
     Box2D/Dynamics/b2World.cpp \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
-    motionmanager.cpp
+    motionmanager.cpp \
+    psyentity.cpp
 
 HEADERS  += mainwindow.h \
-    guimanager.h \
     Box2D/Collision/Shapes/b2ChainShape.h \
     Box2D/Collision/Shapes/b2CircleShape.h \
     Box2D/Collision/Shapes/b2EdgeShape.h \
@@ -123,13 +122,9 @@ HEADERS  += mainwindow.h \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     Box2D/Box2D.h \
-    motionmanager.h
+    motionmanager.h \
+    psyentity.h
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libs/ -lBox2
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libs/ -lBox2d
-else:unix: LIBS += -L$$PWD/libs/ -lBox2
 
-INCLUDEPATH += $$PWD/libs
-DEPENDPATH += $$PWD/libs
 
 DISTFILES +=
