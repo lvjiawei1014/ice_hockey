@@ -3,6 +3,12 @@
 #define MOTIONMANAGER_H
 #include <Box2D/Box2D.h>
 #include <psyentity.h>
+
+
+/*
+ * 类motionManager表示物理引擎模块，它在Box2d的基础上封装了所需的功能
+ *
+ */
 class MotionManager{
 
 public:
@@ -14,17 +20,16 @@ public:
     MotionManager();
     ~MotionManager();
 
-    b2World* world;
-    b2Body* batter1;
+    b2World* world;//Box2d中的世界，负责处理物理仿真中的各种计算及相关事务
+    b2Body* batter1;//计球器实体
     b2Body* batter2;
-    b2Body* ball;
+    b2Body* ball;//冰球实体
+
 
     int count;
 
     void build();//创建世界和物体
     void update();//更新物理世界状态
-    struct BodyState* getBodyStates();
-    struct BodyState* getBodyStates(int i);
     int getBodyAmount();
     PsyEntity* getEneity(int i);
     void addBoundary(float x,float y,float width,float height);

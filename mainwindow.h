@@ -10,7 +10,7 @@ class MainWindow : public QWidget
     Q_OBJECT
 private:
     QPushButton* startButton;
-    MotionManager* mMotionManager;
+    MotionManager* mMotionManager;  //物理模块对象
 
 public:
 

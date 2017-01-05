@@ -1,14 +1,12 @@
 #include<motionmanager.h>
 
-
-
-PsyEntity psyEntitys[100];
-float32 timeStep=1.0f/60.0f;
-int32 velocityIterations = 6;
-int32 positionIterations = 2;
+PsyEntity psyEntitys[100];//实体状态对象的数组
+float32 timeStep=1.0f/60.0f;//仿真世界每次计算间隔时间
+int32 velocityIterations = 6;//box2d速度计算迭代次数
+int32 positionIterations = 2;//box2d位置计算迭代次数
 
 MotionManager::MotionManager(){
-    build();
+    build();//初始构造
 }
 MotionManager::~MotionManager(){
     delete world;
@@ -17,25 +15,27 @@ MotionManager::~MotionManager(){
 //
 void MotionManager::build(){
 
-    b2Vec2 gravity(0.0f,0.0f);
+    b2Vec2 gravity(0.0f,0.0f);//重力，俯视视角，重力设为零
     world=(new b2World(gravity));
     count=0;
 
-    addBoundary(-0.1f,-0.1f,0.1f,20.2f);
+    addBoundary(-0.1f,-0.1f,0.1f,20.2f);//添加边界实体
     addBoundary(-0.1f,-0.1f,12.2f,0.1f);
     addBoundary(0.0f,20.0f,12.1f,0.1f);
     addBoundary(12.0f,-0.1f,0.1f,20.2f);
-    addBall(2.0f,12.0f,2.0f,-3.0f,0.6f);
+    addBall(2.0f,12.0f,2.0f,-3.0f,0.6f);//添加冰球
 
     //addBall(0.8f,1.0f,-0.1f,0.0f,0.06f);
 }
 
 
-
+//获取实体数量的方法
 int MotionManager::getBodyAmount(){
     return count;
 }
 
+
+//添加边界的方法
 void MotionManager::addBoundary(float x,float y,float width,float height){
 
     b2BodyDef boundaryBodyDef;
@@ -58,6 +58,7 @@ void MotionManager::addBoundary(float x,float y,float width,float height){
     count++;
 }
 
+//添加球的方法
 void  MotionManager::addBall(float x,float y,float vx,float vy,float r){
     b2BodyDef ballBodyDef;
     ballBodyDef.position.Set(x,y);
@@ -72,9 +73,9 @@ void  MotionManager::addBall(float x,float y,float vx,float vy,float r){
 
     b2FixtureDef ballFixtureDef;
     ballFixtureDef.shape=&ballShape;
-    ballFixtureDef.density=1.0f;
+    ballFixtureDef.density=1.0f;//密度
     ballFixtureDef.friction=0.0f;
-    ballFixtureDef.restitution=0.7;
+    ballFixtureDef.restitution=0.7;//弹性碰撞恢复系数
     ball->CreateFixture(&ballFixtureDef);
     PsyEntity ballEntity(1,ball);
     ballEntity.r=r;
@@ -82,11 +83,12 @@ void  MotionManager::addBall(float x,float y,float vx,float vy,float r){
     count++;
 }
 
-
+//获取实体对象的方法
 PsyEntity* MotionManager::getEneity(int i){
     return &psyEntitys[i];
 };
 
+//仿真世界向前演算的方法，调用Box2的step方法
 void MotionManager::step(){
     world->Step(timeStep,velocityIterations,positionIterations);
 }
