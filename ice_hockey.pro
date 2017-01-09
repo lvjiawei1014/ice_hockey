@@ -72,7 +72,8 @@ SOURCES += main.cpp\
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     motionmanager.cpp \
-    psyentity.cpp
+    psyentity.cpp \
+    controller.cpp
 
 HEADERS  += mainwindow.h \
     Box2D/Collision/Shapes/b2ChainShape.h \
@@ -123,7 +124,8 @@ HEADERS  += mainwindow.h \
     Box2D/Rope/b2Rope.h \
     Box2D/Box2D.h \
     motionmanager.h \
-    psyentity.h
+    psyentity.h \
+    controller.h
 
 
 

@@ -34,6 +34,7 @@ public:
     PsyEntity* getEneity(int i);
     void addBoundary(float x,float y,float width,float height);
     void addBall(float x,float y,float vx,float vy,float r);
+    void addbatter(float r);
     void step();
 
 };

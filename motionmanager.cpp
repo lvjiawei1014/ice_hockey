@@ -23,7 +23,8 @@ void MotionManager::build(){
     addBoundary(-0.1f,-0.1f,12.2f,0.1f);
     addBoundary(0.0f,20.0f,12.1f,0.1f);
     addBoundary(12.0f,-0.1f,0.1f,20.2f);
-    addBall(2.0f,12.0f,2.0f,-3.0f,0.6f);//添加冰球
+    addBall(6.0f,12.0f,0.0f,-5.0f,0.6f);//添加冰球
+    addbatter(0.5f);
 
     //addBall(0.8f,1.0f,-0.1f,0.0f,0.06f);
 }
@@ -42,7 +43,6 @@ void MotionManager::addBoundary(float x,float y,float width,float height){
     boundaryBodyDef.position.Set(x+width/2,y+height/2);
     b2Body* boundaryBody=(world->CreateBody(&boundaryBodyDef));
 
-
     b2PolygonShape boundaryShape;
     boundaryShape.SetAsBox(width,height);
     b2FixtureDef boundaryFixtureDef;
@@ -58,6 +58,49 @@ void MotionManager::addBoundary(float x,float y,float width,float height){
     count++;
 }
 
+void MotionManager::addbatter(float r){
+    b2BodyDef batter1BodyDef;
+    batter1BodyDef.position.Set(6.0f,4.0f);
+    b2Body* batter1Body=world->CreateBody(&batter1BodyDef);
+
+    b2CircleShape batter1Shape;
+    batter1Shape.m_p.Set(0,0);
+    batter1Shape.m_radius=r;
+
+    b2FixtureDef batter1FixtrueDef;
+    batter1FixtrueDef.shape=&batter1Shape;
+    batter1FixtrueDef.density=1.0f;
+    batter1FixtrueDef.restitution=0.7f;
+
+    batter1Body->CreateFixture(&batter1FixtrueDef);
+    PsyEntity batter1Entity(1,batter1Body);
+    batter1Entity.r=r;
+    psyEntitys[count]=batter1Entity;
+    count++;
+
+
+
+    b2BodyDef batter2BodyDef;
+    batter2BodyDef.position.Set(6.0f,16.0f);
+    b2Body* batter2Body=world->CreateBody(&batter2BodyDef);
+
+    b2CircleShape batter2Shape;
+    batter2Shape.m_p.Set(0,0);
+    batter2Shape.m_radius=r;
+
+    b2FixtureDef batter2FixtrueDef;
+    batter2FixtrueDef.shape=&batter2Shape;
+    batter2FixtrueDef.density=1.0f;
+    batter2FixtrueDef.restitution=0.7f;
+
+    batter2Body->CreateFixture(&batter2FixtrueDef);
+    PsyEntity batter2Entity(1,batter2Body);
+    batter2Entity.r=r;
+    psyEntitys[count]=batter2Entity;
+    count++;
+
+}
+
 //添加球的方法
 void  MotionManager::addBall(float x,float y,float vx,float vy,float r){
     b2BodyDef ballBodyDef;
@@ -68,7 +111,7 @@ void  MotionManager::addBall(float x,float y,float vx,float vy,float r){
     ball->SetLinearVelocity(velocity);
 
     b2CircleShape ballShape;
-    ballShape.m_p.Set(r,-r);
+    ballShape.m_p.Set(0,0);
     ballShape.m_radius=r;
 
     b2FixtureDef ballFixtureDef;

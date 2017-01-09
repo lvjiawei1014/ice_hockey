@@ -32,6 +32,13 @@ void MainWindow::updateGameDrawing(){
     for (int t=0;t<mMotionManager->getBodyAmount();t++){
         drawBody(mMotionManager->getEneity(t));
     }
+
+    float x=mMotionManager->ball->GetPosition().x;
+    float y=mMotionManager->ball->GetPosition().y;
+
+    QPainter painter(this);
+    painter.drawText(600,100,QString("x:%1").arg(x));
+    painter.drawText(600,200,QString("y:%1").arg(y));
 }
 
 
@@ -53,15 +60,15 @@ void MainWindow::drawBody(PsyEntity *psyEntity){
     case 1:
 
         x=int((psyEntity->body->GetPosition().x)*30+60);
-        y=int(700-(psyEntity->body->GetPosition().y)*30);
-        r=int(psyEntity->r*2*30);
-        painter.drawEllipse(x,y,r,r);
+        y=int(640-(psyEntity->body->GetPosition().y)*30);
+        r=int(psyEntity->r*30);
+        painter.drawEllipse(x-r,y-r,2*r,2*r);
         painter.restore();
         break;
 
     case 2:
         x=int((psyEntity->body->GetPosition().x-psyEntity->w/2)*30+60);
-        y=int(700-(psyEntity->body->GetPosition().y+psyEntity->h/2)*30);
+        y=int(640-(psyEntity->body->GetPosition().y+psyEntity->h/2)*30);
 
         painter.drawRect(x,y,psyEntity->w*30,psyEntity->h*30);
         painter.restore();
