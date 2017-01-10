@@ -17,6 +17,8 @@ public:
     static const int BODYTYPE_CIRCLE=1;
     static const int BODYTYPE_RECTANGLE=2;
 
+    float timeStep;
+
     MotionManager();
     ~MotionManager();
 
@@ -36,6 +38,8 @@ public:
     void addBall(float x,float y,float vx,float vy,float r);
     void addbatter(float r);
     void step();
+    void applyAcceleration(b2Body* body,float ax,float ay);
+    void launch();
 
 };
 

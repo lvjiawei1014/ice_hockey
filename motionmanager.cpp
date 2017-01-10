@@ -1,7 +1,7 @@
 #include<motionmanager.h>
 
 PsyEntity psyEntitys[100];//实体状态对象的数组
-float32 timeStep=1.0f/60.0f;//仿真世界每次计算间隔时间
+//float32 timeStep=1.0f/60.0f;//仿真世界每次计算间隔时间
 int32 velocityIterations = 6;//box2d速度计算迭代次数
 int32 positionIterations = 2;//box2d位置计算迭代次数
 
@@ -14,6 +14,8 @@ MotionManager::~MotionManager(){
 
 //
 void MotionManager::build(){
+
+    timeStep=1.0f/60.0f;
 
     b2Vec2 gravity(0.0f,0.0f);//重力，俯视视角，重力设为零
     world=(new b2World(gravity));
@@ -60,8 +62,9 @@ void MotionManager::addBoundary(float x,float y,float width,float height){
 
 void MotionManager::addbatter(float r){
     b2BodyDef batter1BodyDef;
-    batter1BodyDef.position.Set(6.0f,4.0f);
-    b2Body* batter1Body=world->CreateBody(&batter1BodyDef);
+    batter1BodyDef.position.Set(5.6f,4.0f);
+    batter1BodyDef.type=b2_dynamicBody;
+    batter1=world->CreateBody(&batter1BodyDef);
 
     b2CircleShape batter1Shape;
     batter1Shape.m_p.Set(0,0);
@@ -69,20 +72,21 @@ void MotionManager::addbatter(float r){
 
     b2FixtureDef batter1FixtrueDef;
     batter1FixtrueDef.shape=&batter1Shape;
-    batter1FixtrueDef.density=1.0f;
+    batter1FixtrueDef.density=4.0f;
     batter1FixtrueDef.restitution=0.7f;
 
-    batter1Body->CreateFixture(&batter1FixtrueDef);
-    PsyEntity batter1Entity(1,batter1Body);
+    batter1->CreateFixture(&batter1FixtrueDef);
+    PsyEntity batter1Entity(1,batter1);
     batter1Entity.r=r;
     psyEntitys[count]=batter1Entity;
     count++;
+//    batter1Body->SetActive(false);
 
 
 
     b2BodyDef batter2BodyDef;
     batter2BodyDef.position.Set(6.0f,16.0f);
-    b2Body* batter2Body=world->CreateBody(&batter2BodyDef);
+    batter2=world->CreateBody(&batter2BodyDef);
 
     b2CircleShape batter2Shape;
     batter2Shape.m_p.Set(0,0);
@@ -93,11 +97,12 @@ void MotionManager::addbatter(float r){
     batter2FixtrueDef.density=1.0f;
     batter2FixtrueDef.restitution=0.7f;
 
-    batter2Body->CreateFixture(&batter2FixtrueDef);
-    PsyEntity batter2Entity(1,batter2Body);
+    batter2->CreateFixture(&batter2FixtrueDef);
+    PsyEntity batter2Entity(1,batter2);
     batter2Entity.r=r;
     psyEntitys[count]=batter2Entity;
     count++;
+    batter2->SetActive(false);
 
 }
 
@@ -134,6 +139,20 @@ PsyEntity* MotionManager::getEneity(int i){
 //仿真世界向前演算的方法，调用Box2的step方法
 void MotionManager::step(){
     world->Step(timeStep,velocityIterations,positionIterations);
+}
+
+void MotionManager::applyAcceleration(b2Body *body, float ax, float ay){
+    float mass=body->GetMass();
+    b2Vec2 force(ax*mass,ay*mass);
+//    b2Vec2 force(1.0f*mass,1.0f*mass);
+    body->setForce(force);
+//    body->ApplyForce(force,body->GetWorldCenter(),true);
+
+}
+
+void MotionManager::launch(){
+    ball->SetTransform(b2Vec2(4.0f,17.0f),0.0f);
+    ball->SetLinearVelocity(b2Vec2(3.0f,-6.0f));
 }
 
 

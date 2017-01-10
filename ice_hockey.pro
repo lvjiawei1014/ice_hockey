@@ -73,7 +73,9 @@ SOURCES += main.cpp\
     Box2D/Rope/b2Rope.cpp \
     motionmanager.cpp \
     psyentity.cpp \
-    controller.cpp
+    controller.cpp \
+    gamemanager.cpp \
+    strategysystem.cpp
 
 HEADERS  += mainwindow.h \
     Box2D/Collision/Shapes/b2ChainShape.h \
@@ -125,7 +127,9 @@ HEADERS  += mainwindow.h \
     Box2D/Box2D.h \
     motionmanager.h \
     psyentity.h \
-    controller.h
+    controller.h \
+    gamemanager.h \
+    strategysystem.h
 
 
 

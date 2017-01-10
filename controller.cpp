@@ -62,4 +62,5 @@ bool Controller::newCommand(Command command){
 
 void Controller::apply(b2Body* body,float ax, float ay){
     motionManager->applyAcceleration(body,ax,ay);
+//    motionManager->applyAcceleration(body,1.0f,1.0f);
 }

@@ -6,9 +6,18 @@ MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
     mMotionManager=new MotionManager();
-    resize(400,600);
-    //startButton=new QPushButton("Start",this);
-    //connect(startButton,SIGNAL(clicked(bool)),this,SLOT(step()));
+    controller=new Controller();
+    controller->motionManager=mMotionManager;
+    strategySystem=new StrategySystem();
+    strategySystem->motionManager=mMotionManager;
+    strategySystem->controller=this->controller;
+
+//    gameManager=new GameManager();
+//    gameManager->motionManager=mMotionManager;
+//    gameManager->setMode(0);
+    resize(800,680);
+    startButton=new QPushButton("Start",this);
+    connect(startButton,SIGNAL(clicked(bool)),this,SLOT(launch()));
     //update();
 
     //暂时用qt的计时器触发绘图
@@ -19,7 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+//    delete gameManager;
     delete mMotionManager;
+    delete controller;
+    delete strategySystem;
+
 }
 
 
@@ -38,13 +51,17 @@ void MainWindow::updateGameDrawing(){
 
     QPainter painter(this);
     painter.drawText(600,100,QString("x:%1").arg(x));
-    painter.drawText(600,200,QString("y:%1").arg(y));
+    painter.drawText(600,150,QString("y:%1").arg(y));
 }
 
 
 void MainWindow::drawBody(PsyEntity *psyEntity){
 
     //设置qt画笔
+    if(psyEntity->body->IsActive()==false){
+        return;
+    }
+
     QPainter painter(this);
     QColor hourColor(127, 0, 127);
 
@@ -80,9 +97,15 @@ void MainWindow::drawBody(PsyEntity *psyEntity){
 }
 //调用motion manager的step方法
 void MainWindow::step(){
-    for(int x=0;x<1;x++){
-        mMotionManager->step();
-    }
+
+
+
+    mMotionManager->step();
     update();
+    strategySystem->calculate();
+}
+
+void MainWindow::launch(){
+    this->mMotionManager->launch();
 }
 

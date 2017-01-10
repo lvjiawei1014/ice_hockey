@@ -17,6 +17,7 @@ public:
     float r;//半径，仅圆形对象
 
 
+
     PsyEntity();
     PsyEntity(int type,b2Body* body);
     ~PsyEntity();
