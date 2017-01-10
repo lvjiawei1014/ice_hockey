@@ -39,6 +39,7 @@ public:
     void addbatter(float r);
     void step();
     void applyAcceleration(b2Body* body,float ax,float ay);
+    void setVelocity(b2Body* body,float vx,float vy);
     void launch();
 
 };

@@ -54,7 +54,11 @@ bool Controller::newCommand(Command command){
         ay=ayp+ky*(command.acceleration+ayp);
     }
 
-    apply(batter,ax,ay);
+    //apply(batter,ax,ay);
+    float vx=(command.positionX-batter->GetPosition().x)/command.t;
+    float vy=(command.positionY-batter->GetPosition().y)/command.t;
+
+    setVelocity(batter,vx,vy);
 
 
 
@@ -63,4 +67,8 @@ bool Controller::newCommand(Command command){
 void Controller::apply(b2Body* body,float ax, float ay){
     motionManager->applyAcceleration(body,ax,ay);
 //    motionManager->applyAcceleration(body,1.0f,1.0f);
+}
+
+void Controller::setVelocity(b2Body* body,float vx, float vy){
+    motionManager->setVelocity(body,vx,vy);
 }

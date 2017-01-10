@@ -27,6 +27,7 @@ public:
     ~Controller();
     bool newCommand(Command command);
     void apply(b2Body* body,float ax,float ay);
+    void setVelocity(b2Body* body,float vx,float vy);
 
 };
 

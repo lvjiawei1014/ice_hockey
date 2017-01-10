@@ -50,7 +50,7 @@ void MotionManager::addBoundary(float x,float y,float width,float height){
     b2FixtureDef boundaryFixtureDef;
     boundaryFixtureDef.shape=&boundaryShape;
     boundaryFixtureDef.density=1;
-    boundaryFixtureDef.restitution=0.8;
+    boundaryFixtureDef.restitution=0.9;
     boundaryBody->CreateFixture(&boundaryFixtureDef);
 
     PsyEntity psyEntity(2,boundaryBody);
@@ -72,8 +72,8 @@ void MotionManager::addbatter(float r){
 
     b2FixtureDef batter1FixtrueDef;
     batter1FixtrueDef.shape=&batter1Shape;
-    batter1FixtrueDef.density=4.0f;
-    batter1FixtrueDef.restitution=0.7f;
+    batter1FixtrueDef.density=10.0f;
+    batter1FixtrueDef.restitution=0.9f;
 
     batter1->CreateFixture(&batter1FixtrueDef);
     PsyEntity batter1Entity(1,batter1);
@@ -123,7 +123,7 @@ void  MotionManager::addBall(float x,float y,float vx,float vy,float r){
     ballFixtureDef.shape=&ballShape;
     ballFixtureDef.density=1.0f;//密度
     ballFixtureDef.friction=0.0f;
-    ballFixtureDef.restitution=0.7;//弹性碰撞恢复系数
+    ballFixtureDef.restitution=0.8;//弹性碰撞恢复系数
     ball->CreateFixture(&ballFixtureDef);
     PsyEntity ballEntity(1,ball);
     ballEntity.r=r;
@@ -152,7 +152,11 @@ void MotionManager::applyAcceleration(b2Body *body, float ax, float ay){
 
 void MotionManager::launch(){
     ball->SetTransform(b2Vec2(4.0f,17.0f),0.0f);
-    ball->SetLinearVelocity(b2Vec2(3.0f,-6.0f));
+    ball->SetLinearVelocity(b2Vec2(2.0f,-6.0f));
+}
+
+void MotionManager::setVelocity(b2Body* body, float vx, float vy){
+    body->SetLinearVelocity(b2Vec2(vx,vy));
 }
 
 

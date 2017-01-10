@@ -51,6 +51,7 @@ void StrategySystem::calculate(){
 
         cmd.positionX=sx;
         cmd.positionY=8.0f;
+        cmd.t=(8.0f-pball.y)/vball.y;
 
 
     }
