@@ -387,6 +387,8 @@ public:
 	/// Dump this body to a log file
 	void Dump();
 
+    void setForce(b2Vec2 f);
+
 private:
 
 	friend class b2World;
@@ -878,6 +880,10 @@ inline b2World* b2Body::GetWorld()
 inline const b2World* b2Body::GetWorld() const
 {
 	return m_world;
+}
+
+inline void b2Body::setForce(b2Vec2 f){
+    m_force =f;
 }
 
 #endif
