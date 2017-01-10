@@ -6,6 +6,7 @@
 
 typedef struct{
     int id;
+    float t;
     float positionX;
     float positionY;
     float velocityX;
@@ -17,13 +18,15 @@ typedef struct{
 }Command;
 
 class Controller {
-private:
-    MotionManager* motionManager;
+
 
 public:
+    MotionManager* motionManager;
+
     Controller();
     ~Controller();
-    void newCommand(Command command);
+    bool newCommand(Command command);
+    void apply(b2Body* body,float ax,float ay);
 
 };
 
